@@ -19,34 +19,14 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 /**
  * 生成二维码工具类
- * Created by 吴江泉 on 2015/5/15.
  */
 public final class EncodingHandlerUtils {
 
-    /**
-     * 初始化头像图片
-     */
-    public static  Bitmap initProtrait(Context context,int image_width_height,int url) {
-        try {
-            // 这里采用从asset中加载图片abc.jpg
-            Bitmap portrait = BitmapFactory.decodeResource(context.getResources(), url);
 
-            // 对原有图片压缩显示大小
-            Matrix mMatrix = new Matrix();
-            float width = portrait.getWidth();
-            float height = portrait.getHeight();
-            mMatrix.setScale(image_width_height / width, image_width_height / height);
-            return Bitmap.createBitmap(portrait, 0, 0, (int) width,
-                    (int) height, mMatrix, true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
     /**
      * 创建QR二维码图片
      */
-    public static  Bitmap createQRCodeBitmap(String content,int code_width_height) {
+    public static Bitmap createQRCode(String content, int code_width_height) {
         // 用于设置QR二维码参数
         Hashtable<EncodeHintType, Object> qrParam = new Hashtable<EncodeHintType, Object>();
         // 设置QR二维码的纠错级别——这里选择最高H级别
@@ -75,20 +55,17 @@ public final class EncodingHandlerUtils {
                 }
             }
 
-            // 创建一张bitmap图片，采用最高的图片效果ARGB_8888
-            Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-            // 将上面的二维码颜色数组传入，生成图片颜色
-            bitmap.setPixels(data, 0, w, 0, 0, w, h);
-            return bitmap;
+            return createBitmap(code_width_height, code_width_height, data);
         } catch (WriterException e) {
             e.printStackTrace();
         }
         return null;
     }
+
     /**
      * 在二维码上绘制头像
      */
-    public static  void createQRCodeBitmapWithPortrait(Bitmap qr, Bitmap portrait,int code_width_height) {
+    public static void createQRCodeBitmapWithPortrait(Bitmap qr, Bitmap portrait, int code_width_height) {
         // 头像图片的大小
         int portrait_W = portrait.getWidth();
         int portrait_H = portrait.getHeight();
@@ -107,5 +84,68 @@ public final class EncodingHandlerUtils {
         Rect rect2 = new Rect(0, 0, portrait_W, portrait_H);
         // 开始绘制
         canvas.drawBitmap(portrait, rect2, rect1, null);
+    }
+
+    private static final String CODE = "utf-8";
+
+    public static Bitmap createBarcode(String str, Integer width, Integer height) {
+
+        if (width == null || width < 200) {
+            width = 200;
+        }
+
+        if (height == null || height < 50) {
+            height = 50;
+        }
+
+        try {
+            // 文字编码
+            Hashtable<EncodeHintType, String> hints = new Hashtable<EncodeHintType, String>();
+            hints.put(EncodeHintType.CHARACTER_SET, CODE);
+
+            BitMatrix bitMatrix = new MultiFormatWriter().encode(str,
+                    BarcodeFormat.CODE_128, width, height, hints);
+
+            return BitMatrixToBitmap(bitMatrix);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * BitMatrix转换成Bitmap
+     *
+     * @param matrix
+     * @return
+     */
+    private static Bitmap BitMatrixToBitmap(BitMatrix matrix) {
+        final int WHITE = 0xFFFFFFFF;
+        final int BLACK = 0xFF000000;
+
+        int width = matrix.getWidth();
+        int height = matrix.getHeight();
+        int[] pixels = new int[width * height];
+        for (int y = 0; y < height; y++) {
+            int offset = y * width;
+            for (int x = 0; x < width; x++) {
+                pixels[offset + x] = matrix.get(x, y) ? BLACK : WHITE;
+            }
+        }
+        return createBitmap(width, height, pixels);
+    }
+
+    /**
+     * 生成Bitmap
+     *
+     * @param width
+     * @param height
+     * @param pixels
+     * @return
+     */
+    private static Bitmap createBitmap(int width, int height, int[] pixels) {
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
+        return bitmap;
     }
 }

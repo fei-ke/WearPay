@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -28,10 +29,17 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        findViewById(R.id.test).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.wechat).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Constans.ACTION_LAUNCH_WECHAT_WALLET);
+                sendBroadcast(intent);
+            }
+        });
+        findViewById(R.id.alipay).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Constans.ACTION_LAUNCH_ALIPAY_WALLET);
                 sendBroadcast(intent);
             }
         });
@@ -40,6 +48,7 @@ public class MainActivity extends Activity {
 
         IntentFilter filter = new IntentFilter(Constans.ACTION_SEND_CODE);
         registerReceiver(receiver, filter);
+
     }
 
     @Override
@@ -52,9 +61,13 @@ public class MainActivity extends Activity {
         @Override
         public void onReceive(Context context, Intent intent) {
             String code = intent.getStringExtra(Constans.EXTRA_CODE);
+            Log.i("receive code", code);
             Toast.makeText(context, code, Toast.LENGTH_SHORT).show();
-            Bitmap bitmap = EncodingHandlerUtils.createQRCodeBitmap(code, 1000);
+            Bitmap bitmap = EncodingHandlerUtils.createQRCode(code, 1000);
             imageViewQRCode.setImageBitmap(bitmap);
+
+            bitmap = EncodingHandlerUtils.createBarcode(code, 1000, 400);
+            imageViewBarCode.setImageBitmap(bitmap);
 
         }
     };

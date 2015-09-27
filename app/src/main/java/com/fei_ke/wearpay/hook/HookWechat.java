@@ -1,18 +1,16 @@
 package com.fei_ke.wearpay.hook;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
@@ -20,10 +18,9 @@ import de.robv.android.xposed.XposedHelpers;
 
 import static com.fei_ke.wearpay.commen.Constans.ACTION_LAUNCH_WECHAT_WALLET;
 import static com.fei_ke.wearpay.commen.Constans.ACTION_SEND_CODE;
-import static com.fei_ke.wearpay.commen.Constans.EXTRA_BARCODE;
 import static com.fei_ke.wearpay.commen.Constans.EXTRA_CODE;
-import static com.fei_ke.wearpay.commen.Constans.EXTRA_QRCODE;
 import static com.fei_ke.wearpay.commen.Constans.WECHAT_CORE_SERVICE_NAME;
+import static com.fei_ke.wearpay.commen.Constans.WECHAT_PACKAGE;
 import static com.fei_ke.wearpay.commen.Constans.WECHAT_WALLET_ACTIVITY_NAME;
 
 /**
@@ -67,6 +64,7 @@ public class HookWechat {
         BroadcastReceiver receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
+                XposedBridge.log("receive action: " + intent.getAction());
                 launchWechatWallet(context, walletActivityClass);
             }
         };
@@ -104,4 +102,5 @@ public class HookWechat {
         launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(launch);
     }
+
 }

@@ -5,11 +5,25 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/test"
+        android:id="@+id/wechat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="启动" />
+        android:text="微信支付" />
+
+    <Button
+        android:id="@+id/alipay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="支付宝支付" />
+
+    <ImageView
+        android:id="@+id/iv_barcode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop" />
 
     <ImageView
         android:id="@+id/iv_qrcode"
@@ -17,8 +31,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
 
-    <ImageView
-        android:id="@+id/iv_barcode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+
 </LinearLayout>

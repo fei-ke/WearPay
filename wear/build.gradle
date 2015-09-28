@@ -1,19 +1,20 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.hugo'
+
 android {
-    compileSdkVersion 22
+    compileSdkVersion 23
     buildToolsVersion "23.0.1"
 
     defaultConfig {
         applicationId "com.fei_ke.wearpay"
         minSdkVersion 21
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -21,8 +22,6 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    provided fileTree(dir: 'provided-libs', include: ['*.jar'])
+    compile 'com.google.android.support:wearable:1.1.0'
     compile project(':common')
-    wearApp project(':wear')
-    testCompile 'junit:junit:4.12'
 }

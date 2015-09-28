@@ -9,4 +9,5 @@ public class Common {
 
     public static final String PATH_QR_CODE = "/qr_code";
     public static final String KEY_QR_CODE = "qr_code";
+    public static final String KEY_BAR_CODE = "bar_code";
 }

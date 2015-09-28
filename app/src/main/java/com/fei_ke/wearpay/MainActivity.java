@@ -157,12 +157,13 @@ public class MainActivity extends Activity implements
             String code = intent.getStringExtra(Constans.EXTRA_CODE);
             Log.i("receive code", code);
             Toast.makeText(context, code, Toast.LENGTH_SHORT).show();
-            Bitmap bitmap = EncodingHandlerUtils.createQRCode(code, 400);
-            imageViewQRCode.setImageBitmap(bitmap);
-            sendPhoto(toAsset(bitmap));
+            Bitmap bitmapQR = EncodingHandlerUtils.createQRCode(code, 500);
+            imageViewQRCode.setImageBitmap(bitmapQR);
 
-            bitmap = EncodingHandlerUtils.createBarcode(code, 1000, 400);
-            imageViewBarCode.setImageBitmap(bitmap);
+            Bitmap bitmapBar = EncodingHandlerUtils.createBarcode(code, 500, 300);
+            imageViewBarCode.setImageBitmap(bitmapBar);
+            sendPhoto(toAsset(bitmapQR),toAsset(bitmapBar) );
+
         }
     };
 
@@ -193,10 +194,10 @@ public class MainActivity extends Activity implements
     /**
      * Sends the asset that was created form the photo we took by adding it to the Data Item store.
      */
-    private void sendPhoto(Asset asset) {
+    private void sendPhoto(Asset qrAsset, Asset barAsset) {
         PutDataMapRequest dataMap = PutDataMapRequest.create(Common.PATH_QR_CODE);
-        dataMap.getDataMap().putAsset(Common.KEY_QR_CODE, asset);
-        dataMap.getDataMap().putLong("time", new Date().getTime());
+        dataMap.getDataMap().putAsset(Common.KEY_QR_CODE, qrAsset);
+        dataMap.getDataMap().putAsset(Common.KEY_BAR_CODE, barAsset);
         PutDataRequest request = dataMap.asPutDataRequest();
         Wearable.DataApi.putDataItem(mGoogleApiClient, request)
                 .setResultCallback(new ResultCallback<DataApi.DataItemResult>() {

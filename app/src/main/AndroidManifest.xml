@@ -25,7 +25,11 @@
                 android:name="android.accessibilityservice"
                 android:resource="@xml/capture_service_config"/>
         </service>
-
+        <service android:name=".WatchServices">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.BIND_LISTENER" />
+            </intent-filter>
+        </service>
         <meta-data
             android:name="xposedmodule"
             android:value="true"/>

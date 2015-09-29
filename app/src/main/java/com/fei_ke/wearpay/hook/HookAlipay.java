@@ -15,10 +15,12 @@ import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 
+import static com.fei_ke.wearpay.commen.Constans.ACTION_FINISHI_ALIPAY_WALLET;
+import static com.fei_ke.wearpay.commen.Constans.ACTION_LAUNCH_ALIPAY_WALLET;
 import static com.fei_ke.wearpay.commen.Constans.ACTION_SEND_CODE;
+import static com.fei_ke.wearpay.commen.Constans.ALIPAY_PACKAGE;
 import static com.fei_ke.wearpay.commen.Constans.ALIPAY_WALLET_ACTIVITY_NAME;
 import static com.fei_ke.wearpay.commen.Constans.EXTRA_CODE;
-import static com.fei_ke.wearpay.commen.Constans.*;
 
 /**
  * Created by fei-ke on 2015/9/26.
@@ -38,18 +40,34 @@ public class HookAlipay {
         });
 
 
+        final FinishActivityReceiver receiver = new FinishActivityReceiver();
         XposedHelpers.findAndHookMethod(Activity.class, "onCreate", Bundle.class, new XC_MethodHook() {
                     @Override
                     protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                         String name = param.thisObject.getClass().getName();
                         if (name.equals(ALIPAY_WALLET_ACTIVITY_NAME)) {
                             final Activity activity = (Activity) param.thisObject;
+
+                            IntentFilter intentFilter = new IntentFilter(ACTION_FINISHI_ALIPAY_WALLET);
+                            receiver.setActivity(activity);
+                            activity.registerReceiver(receiver, intentFilter);
+
                             hookCode(activity);
                         }
                     }
                 }
 
         );
+        XposedHelpers.findAndHookMethod(Activity.class, "onDestroy", new XC_MethodHook() {
+            @Override
+            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                final Activity activity = (Activity) param.thisObject;
+                String name = activity.getClass().getName();
+                if (name.equals(ALIPAY_WALLET_ACTIVITY_NAME)) {
+                    activity.unregisterReceiver(receiver);
+                }
+            }
+        });
     }
 
 
@@ -62,7 +80,7 @@ public class HookAlipay {
             public void onReceive(Context context, Intent intent) {
                 XposedBridge.log("receive action: " + intent.getAction());
                 final Class<?> walletActivityClass = XposedHelpers.findClass(ALIPAY_WALLET_ACTIVITY_NAME, classLoader);
-                launchtWallet(context, walletActivityClass);
+                launchWallet(context, walletActivityClass);
             }
         };
 
@@ -71,7 +89,6 @@ public class HookAlipay {
 
     private void hookCode(final Activity activity) {
         if (hasHooked) return;
-
         hasHooked = true;
 
         Class<?> classTarget = XposedHelpers.findClass("com.alipay.mobile.onsitepay9.payer.fragments.BarcodePayFragment", activity.getClassLoader());
@@ -90,7 +107,7 @@ public class HookAlipay {
         });
     }
 
-    private void launchtWallet(Context context, Class walletActivityClass) {
+    private void launchWallet(Context context, Class walletActivityClass) {
         Intent launch = new Intent(context, walletActivityClass);
         launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(launch);

@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.wearable.view.WatchViewStub
-    android:id="@+id/watch_view_stub"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:rectLayout="@layout/rect_activity_main"
-    app:roundLayout="@layout/round_activity_main"
-    tools:context=".MainActivity"
-    tools:deviceIds="wear"/>
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btn_wechat"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="微信" />
+
+    <Button
+        android:id="@+id/btn_alipay"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="支付宝" />
+</LinearLayout>

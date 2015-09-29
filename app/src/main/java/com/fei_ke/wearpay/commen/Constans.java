@@ -9,7 +9,9 @@ public class Constans {
     public static final String WECHAT_CORE_SERVICE_NAME = "com.tencent.mm.booter.CoreService";
 
     public static final String ACTION_LAUNCH_WECHAT_WALLET = "com.fei_ke.wearpay.action.launchwechat";
+    public static final String ACTION_FINISH_WECHAT_WALLET = "com.fei_ke.wearpay.action.finishwechat";
     public static final String ACTION_LAUNCH_ALIPAY_WALLET = "com.fei_ke.wearpay.action.launchalipay";
+    public static final String ACTION_FINISHI_ALIPAY_WALLET = "com.fei_ke.wearpay.action.finishalipay";
 
     public static final String ACTION_SEND_CODE = "com.fei_ke.wearpay.action.sendcode";
     public static final String EXTRA_CODE = "code";

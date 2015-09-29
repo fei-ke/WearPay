@@ -16,6 +16,8 @@ import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 
+import static com.fei_ke.wearpay.commen.Constans.ACTION_FINISHI_ALIPAY_WALLET;
+import static com.fei_ke.wearpay.commen.Constans.ACTION_FINISH_WECHAT_WALLET;
 import static com.fei_ke.wearpay.commen.Constans.ACTION_LAUNCH_WECHAT_WALLET;
 import static com.fei_ke.wearpay.commen.Constans.ACTION_SEND_CODE;
 import static com.fei_ke.wearpay.commen.Constans.EXTRA_CODE;
@@ -40,15 +42,26 @@ public class HookWechat {
                     }
                 });
 
+                final FinishActivityReceiver receiver = new FinishActivityReceiver();
                 XposedHelpers.findAndHookMethod(walletActivityClass, "onCreate", Bundle.class, new XC_MethodHook() {
                             @Override
                             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                                 final Activity activity = (Activity) param.thisObject;
                                 hookCode(activity);
+
+                                IntentFilter intentFilter = new IntentFilter(ACTION_FINISH_WECHAT_WALLET);
+                                receiver.setActivity(activity);
+                                activity.registerReceiver(receiver, intentFilter);
                             }
                         }
-
                 );
+                XposedHelpers.findAndHookMethod(walletActivityClass, "onDestroy", new XC_MethodHook() {
+                    @Override
+                    protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                        final Activity activity = (Activity) param.thisObject;
+                        activity.unregisterReceiver(receiver);
+                    }
+                });
             }
         });
 
@@ -95,6 +108,7 @@ public class HookWechat {
                 }
             });
         }
+
     }
 
     private void launchWechatWallet(Context context, Class walletActivityClass) {

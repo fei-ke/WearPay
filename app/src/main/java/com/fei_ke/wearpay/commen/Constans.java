@@ -1,5 +1,8 @@
 package com.fei_ke.wearpay.commen;
 
+
+import com.fei_ke.wearpay.BuildConfig;
+
 /**
  * Created by 杨金阳 on 2015/9/26.
  */
@@ -22,4 +25,5 @@ public class Constans {
     public static final String ALIPAY_WALLET_ACTIVITY_NAME = "com.alipay.mobile.onsitepay9.payer.OspTabHostActivity";
     public static final String ALIPAY_CORE_SERVICE_NAME = "com.alipay.android.phone.nfd.nfdservice.ui.app.NfdService";
 
+    public static final String THIS_PACKAGE_NAME = BuildConfig.APPLICATION_ID;
 }

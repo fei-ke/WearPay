@@ -21,6 +21,7 @@ import static com.fei_ke.wearpay.commen.Constans.ACTION_SEND_CODE;
 import static com.fei_ke.wearpay.commen.Constans.ALIPAY_PACKAGE;
 import static com.fei_ke.wearpay.commen.Constans.ALIPAY_WALLET_ACTIVITY_NAME;
 import static com.fei_ke.wearpay.commen.Constans.EXTRA_CODE;
+import static com.fei_ke.wearpay.commen.Constans.THIS_PACKAGE_NAME;
 
 /**
  * Created by fei-ke on 2015/9/26.
@@ -100,6 +101,7 @@ public class HookAlipay {
                 String code = (String) codeField.get(param.thisObject);
 
                 Intent intent = new Intent(ACTION_SEND_CODE);
+                intent.setPackage(THIS_PACKAGE_NAME);
                 intent.putExtra(EXTRA_CODE, code);
 
                 activity.sendBroadcast(intent);

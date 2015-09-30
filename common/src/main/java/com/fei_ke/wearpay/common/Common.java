@@ -15,5 +15,6 @@ public class Common {
     public static final String PATH_FINISH_WALLET = "/finish_wallet";
     public static final String LAUNCH_WECHAT = "wechat";
     public static final String LAUNCH_ALIPAY = "alipay";
-    public static final String KEY_WITCH= "witch";
+    public static final String KEY_WITCH = "witch";
+
 }

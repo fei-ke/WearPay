@@ -1,7 +1,6 @@
 package com.fei_ke.wearpay.hook;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -16,13 +15,12 @@ import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 
-import static com.fei_ke.wearpay.commen.Constans.ACTION_FINISHI_ALIPAY_WALLET;
 import static com.fei_ke.wearpay.commen.Constans.ACTION_FINISH_WECHAT_WALLET;
 import static com.fei_ke.wearpay.commen.Constans.ACTION_LAUNCH_WECHAT_WALLET;
 import static com.fei_ke.wearpay.commen.Constans.ACTION_SEND_CODE;
 import static com.fei_ke.wearpay.commen.Constans.EXTRA_CODE;
+import static com.fei_ke.wearpay.commen.Constans.THIS_PACKAGE_NAME;
 import static com.fei_ke.wearpay.commen.Constans.WECHAT_CORE_SERVICE_NAME;
-import static com.fei_ke.wearpay.commen.Constans.WECHAT_PACKAGE;
 import static com.fei_ke.wearpay.commen.Constans.WECHAT_WALLET_ACTIVITY_NAME;
 
 /**
@@ -103,6 +101,7 @@ public class HookWechat {
                 public void afterTextChanged(Editable s) {
                     String code = s.toString().replace(" ", "");
                     Intent intent = new Intent(ACTION_SEND_CODE);
+                    intent.setPackage(THIS_PACKAGE_NAME);
                     intent.putExtra(EXTRA_CODE, code);
                     activity.sendBroadcast(intent);
                 }

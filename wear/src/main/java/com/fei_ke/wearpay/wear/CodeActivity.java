@@ -147,7 +147,7 @@ public class CodeActivity extends Activity implements
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mGoogleApiClient.disconnect();
+        //mGoogleApiClient.disconnect();
     }
 
     @DebugLog

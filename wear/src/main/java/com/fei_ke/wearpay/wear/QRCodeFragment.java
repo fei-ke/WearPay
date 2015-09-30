@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 /**
- * Created by 杨金阳 on 2015/9/28.
+ * Created by fei-ke on 2015/9/28.
  */
 public class QRCodeFragment extends Fragment {
     ImageView imageView;

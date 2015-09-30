@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.os.IBinder;
+import android.support.annotation.Nullable;
 
 import com.fei_ke.wearpay.commen.Constans;
 import com.fei_ke.wearpay.commen.EncodingHandlerUtils;
@@ -54,6 +56,12 @@ public class WatchServices extends WearService {
     public void onDestroy() {
         super.onDestroy();
         unregisterReceiver(receiver);
+    }
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
     }
 
     @Override
@@ -145,5 +153,4 @@ public class WatchServices extends WearService {
         Intent intent = new Intent(Constans.ACTION_FINISHI_ALIPAY_WALLET);
         sendBroadcast(intent);
     }
-
 }

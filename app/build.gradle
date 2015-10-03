@@ -6,14 +6,15 @@ android {
 
     defaultConfig {
         applicationId "com.fei_ke.wearpay"
-        minSdkVersion 21
+        minSdkVersion 19
         targetSdkVersion 22
-        versionCode 1
+        versionCode 2
         versionName "1.0"
     }
     buildTypes {
         release {
             minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

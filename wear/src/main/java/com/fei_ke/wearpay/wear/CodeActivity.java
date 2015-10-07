@@ -34,7 +34,7 @@ public class CodeActivity extends Activity implements WatchService.OnCodeChangeL
 
     private GridViewPager mPager;
     private QRCodeFragment qrCodeFragment;
-    private QRCodeFragment barCodeFragment;
+    private BarcodeFragment barCodeFragment;
 
     private String witch;
 
@@ -48,7 +48,7 @@ public class CodeActivity extends Activity implements WatchService.OnCodeChangeL
         witch = getIntent().getStringExtra(Common.KEY_WITCH);
 
         qrCodeFragment = new QRCodeFragment();
-        barCodeFragment = new QRCodeFragment();
+        barCodeFragment = new BarcodeFragment();
 
         setContentView(R.layout.activity_code);
         final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
@@ -99,8 +99,8 @@ public class CodeActivity extends Activity implements WatchService.OnCodeChangeL
 
         @Override
         public Fragment getFragment(int row, int column) {
-            if (column == 0) return qrCodeFragment;
-            if (column == 1) return barCodeFragment;
+            if (column == 0) return barCodeFragment;
+            if (column == 1) return qrCodeFragment;
             return null;
         }
 

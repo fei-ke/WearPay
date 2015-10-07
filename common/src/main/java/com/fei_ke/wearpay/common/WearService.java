@@ -18,6 +18,9 @@ import com.google.android.gms.wearable.NodeApi;
 import com.google.android.gms.wearable.Wearable;
 
 import java.io.InputStream;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Base WearApi Service
@@ -99,6 +102,40 @@ public abstract class WearService extends Service implements
     @Override
     public void onMessageReceived(MessageEvent messageEvent) {
 
+    }
+
+    protected Collection<String> getNodes() {
+        HashSet<String> results = new HashSet<String>();
+        NodeApi.GetConnectedNodesResult nodes =
+                Wearable.NodeApi.getConnectedNodes(mGoogleApiClient).await();
+        for (Node node : nodes.getNodes()) {
+            results.add(node.getId());
+        }
+        return results;
+    }
+
+    protected String pickBestNodeId(Set<Node> nodes) {
+        String bestNodeId = null;
+        // Find a nearby node or pick one arbitrarily
+        for (Node node : nodes) {
+            if (node.isNearby()) {
+                return node.getId();
+            }
+            bestNodeId = node.getId();
+        }
+        return bestNodeId;
+    }
+
+    protected void sendMessageToAllNodes(final String path, final byte[] data) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Collection<String> nodes = getNodes();
+                for (String n : nodes) {
+                    Wearable.MessageApi.sendMessage(mGoogleApiClient, n, path, data);
+                }
+            }
+        }).start();
     }
 
     /**

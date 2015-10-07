@@ -1,13 +1,8 @@
 
-package com.fei_ke.wearpay.commen;
+package com.fei_ke.wearpay.common;
 
-import java.util.Hashtable;
-
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.graphics.Rect;
 
 import com.google.zxing.BarcodeFormat;
@@ -16,6 +11,8 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+
+import java.util.Hashtable;
 
 /**
  * 生成二维码工具类

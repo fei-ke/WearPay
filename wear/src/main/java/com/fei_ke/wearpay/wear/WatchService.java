@@ -14,17 +14,14 @@ import com.google.android.gms.wearable.Asset;
 import com.google.android.gms.wearable.DataEvent;
 import com.google.android.gms.wearable.DataEventBuffer;
 import com.google.android.gms.wearable.DataMapItem;
-import com.google.android.gms.wearable.Node;
-import com.google.android.gms.wearable.NodeApi;
-import com.google.android.gms.wearable.Wearable;
+import com.google.android.gms.wearable.MessageEvent;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import hugo.weaving.DebugLog;
+
+import static com.fei_ke.wearpay.common.Common.PATH_CODE;
 
 /**
  * Created by fei-ke on 2015/9/30.
@@ -47,51 +44,14 @@ public class WatchService extends WearService {
 
     @DebugLog
     private void launchWallet(final String witch) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Collection<String> nodes = getNodes();
-                for (String n : nodes) {
-                    Wearable.MessageApi.sendMessage(mGoogleApiClient, n, Common.PATH_LAUNCH_WALLET, witch.getBytes());
-                }
-            }
-        }).start();
+        sendMessageToAllNodes(Common.PATH_LAUNCH_WALLET, witch.getBytes());
     }
 
     @DebugLog
     private void finishWallet(final String witch) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Collection<String> nodes = getNodes();
-                for (String n : nodes) {
-                    Wearable.MessageApi.sendMessage(mGoogleApiClient, n, Common.PATH_FINISH_WALLET, witch.getBytes());
-                }
-            }
-        }).start();
+        sendMessageToAllNodes(Common.PATH_FINISH_WALLET, witch.getBytes());
     }
 
-    private String pickBestNodeId(Set<Node> nodes) {
-        String bestNodeId = null;
-        // Find a nearby node or pick one arbitrarily
-        for (Node node : nodes) {
-            if (node.isNearby()) {
-                return node.getId();
-            }
-            bestNodeId = node.getId();
-        }
-        return bestNodeId;
-    }
-
-    private Collection<String> getNodes() {
-        HashSet<String> results = new HashSet<String>();
-        NodeApi.GetConnectedNodesResult nodes =
-                Wearable.NodeApi.getConnectedNodes(mGoogleApiClient).await();
-        for (Node node : nodes.getNodes()) {
-            results.add(node.getId());
-        }
-        return results;
-    }
 
     @DebugLog
     @Override
@@ -123,6 +83,13 @@ public class WatchService extends WearService {
         }
     }
 
+    @Override
+    public void onMessageReceived(MessageEvent messageEvent) {
+        String path = messageEvent.getPath();
+        if (path.equals(PATH_CODE)) {
+            String code = new String(messageEvent.getData());
+        }
+    }
 
     public static class WearPayBinder extends Binder {
         private WatchService host;

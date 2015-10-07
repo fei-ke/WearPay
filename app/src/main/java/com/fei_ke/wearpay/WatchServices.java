@@ -9,8 +9,8 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 
 import com.fei_ke.wearpay.commen.Constans;
-import com.fei_ke.wearpay.commen.EncodingHandlerUtils;
 import com.fei_ke.wearpay.common.Common;
+import com.fei_ke.wearpay.common.EncodingHandlerUtils;
 import com.fei_ke.wearpay.common.WearService;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.wearable.Asset;
@@ -112,8 +112,8 @@ public class WatchServices extends WearService {
 
     @DebugLog
     private void sendToWatch(String code) {
-        Bitmap bitmapQR = EncodingHandlerUtils.createQRCode(code, 500);
-        Bitmap bitmapBar = EncodingHandlerUtils.createBarcode(code, 500, 300);
+        Bitmap bitmapQR = EncodingHandlerUtils.createQRCode(code, 600);
+        Bitmap bitmapBar = EncodingHandlerUtils.createBarcode(code, 600, 200);
         PutDataMapRequest dataMap = PutDataMapRequest.create(Common.PATH_QR_CODE);
         dataMap.getDataMap().putAsset(Common.KEY_QR_CODE, toAsset(bitmapQR));
         dataMap.getDataMap().putAsset(Common.KEY_BAR_CODE, toAsset(bitmapBar));
@@ -130,6 +130,8 @@ public class WatchServices extends WearService {
                         }
                     }
                 });
+
+        //sendMessageToAllNodes(Common.PATH_CODE, code.getBytes());
     }
 
     public void launchWechatWallet() {

@@ -14,6 +14,7 @@ import android.support.wearable.view.DotsPageIndicator;
 import android.support.wearable.view.FragmentGridPagerAdapter;
 import android.support.wearable.view.GridViewPager;
 import android.support.wearable.view.WatchViewStub;
+import android.view.WindowManager;
 
 import com.fei_ke.wearpay.common.Common;
 
@@ -41,16 +42,24 @@ public class CodeActivity extends Activity implements WatchService.OnCodeChangeL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_code);
+
+        // Brightness boost
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.screenBrightness = 1.0f;
+        getWindow().setAttributes(lp);
+
+        //bind watch service
         Intent intent = new Intent(this, WatchService.class);
         bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
 
-
+        //get witch wallet to show
         witch = getIntent().getStringExtra(Common.KEY_WITCH);
 
+        //init
         qrCodeFragment = new QRCodeFragment();
         barCodeFragment = new BarcodeFragment();
 
-        setContentView(R.layout.activity_code);
         final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override

@@ -9,8 +9,8 @@ android {
         applicationId "com.fei_ke.wearpay"
         minSdkVersion 19
         targetSdkVersion 23
-        versionCode 3
-        versionName "1.1"
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
     }
     buildTypes {
         release {

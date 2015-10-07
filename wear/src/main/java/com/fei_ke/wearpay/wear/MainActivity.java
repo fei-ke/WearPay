@@ -45,7 +45,9 @@ public class MainActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unbindService(serviceConnection);
+        if (wearPayBinder != null) {
+            unbindService(serviceConnection);
+        }
     }
 
     void initUI() {

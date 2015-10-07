@@ -57,8 +57,11 @@ public class CodeActivity extends Activity implements WatchService.OnCodeChangeL
         witch = getIntent().getStringExtra(Common.KEY_WITCH);
 
         //init
-        qrCodeFragment = new QRCodeFragment();
-        barCodeFragment = new BarcodeFragment();
+        int iconRes = witch.equals(Common.LAUNCH_ALIPAY)
+                ? R.drawable.icon_alipay
+                : R.drawable.icon_wechat;
+        qrCodeFragment = CodeFragment.newQRCodeFragment(iconRes);
+        barCodeFragment = CodeFragment.newBarcodeFragment(iconRes);
 
         final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
@@ -80,8 +83,8 @@ public class CodeActivity extends Activity implements WatchService.OnCodeChangeL
         super.onStop();
         if (wearPayBinder != null) {
             wearPayBinder.finishWallet(witch);
+            unbindService(serviceConnection);
         }
-        unbindService(serviceConnection);
     }
 
     @Override

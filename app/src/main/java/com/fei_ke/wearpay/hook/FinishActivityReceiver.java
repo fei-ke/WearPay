@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 
 /**
- * Created by 杨金阳 on 2015/9/29.
+ * Created by fei-ke on 2015/9/29.
  */
 public class FinishActivityReceiver extends BroadcastReceiver {
     private Activity activity;

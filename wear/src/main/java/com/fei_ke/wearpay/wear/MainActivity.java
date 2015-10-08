@@ -14,7 +14,7 @@ import com.fei_ke.wearpay.common.Common;
 import hugo.weaving.DebugLog;
 
 /**
- * Created by 杨金阳 on 2015/9/29.
+ * Created by fei-ke on 2015/9/29.
  */
 public class MainActivity extends Activity {
     private WatchService.WearPayBinder wearPayBinder;

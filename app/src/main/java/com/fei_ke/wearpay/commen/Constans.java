@@ -4,7 +4,7 @@ package com.fei_ke.wearpay.commen;
 import com.fei_ke.wearpay.BuildConfig;
 
 /**
- * Created by 杨金阳 on 2015/9/26.
+ * Created by fei-ke on 2015/9/26.
  */
 public class Constans {
     public static final String WECHAT_PACKAGE = "com.tencent.mm";

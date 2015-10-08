@@ -1,4 +1,3 @@
 <resources>
-    <string name="app_name">WearPay</string>
     <string name="accessibility_description">获取支付二维码</string>
 </resources>

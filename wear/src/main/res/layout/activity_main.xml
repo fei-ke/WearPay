@@ -1,24 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ImageView
+    <FrameLayout
         android:id="@+id/btn_wechat"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:padding="15dp"
-        android:src="@drawable/icon_wechat"
-        android:text="微信" />
+        android:background="?android:attr/selectableItemBackground">
 
-    <ImageView
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawableStart="@drawable/icon_wechat"
+            android:gravity="center"
+            android:text="@string/wechat_pay" />
+    </FrameLayout>
+
+    <FrameLayout
         android:id="@+id/btn_alipay"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:padding="20dp"
-        android:src="@drawable/icon_alipay"
-        android:text="支付宝" />
+        android:background="?android:attr/selectableItemBackground">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawableStart="@drawable/icon_alipay"
+            android:gravity="center"
+            android:text="@string/ali_pay" />
+    </FrameLayout>
 </LinearLayout>

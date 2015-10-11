@@ -9,6 +9,7 @@ import com.fei_ke.wearpay.BuildConfig;
 public class Constans {
     public static final String WECHAT_PACKAGE = "com.tencent.mm";
     public static final String WECHAT_WALLET_ACTIVITY_NAME = "com.tencent.mm.plugin.offline.ui.WalletOfflineCoinPurseUI";
+    public static final String WECHAT_PAY_SUCCESS_ACTIVITY_NAME = "com.tencent.mm.plugin.wallet_core.ui.WalletOrderInfoUI";
     public static final String WECHAT_CORE_SERVICE_NAME = "com.tencent.mm.booter.CoreService";
 
     public static final String ACTION_LAUNCH_WECHAT_WALLET = "com.fei_ke.wearpay.action.launchwechat";
@@ -17,6 +18,7 @@ public class Constans {
     public static final String ACTION_FINISHI_ALIPAY_WALLET = "com.fei_ke.wearpay.action.finishalipay";
 
     public static final String ACTION_SEND_CODE = "com.fei_ke.wearpay.action.sendcode";
+    public static final String ACTION_PAY_SUCCESS = "com.fei_ke.wearpay.action.pay_success";
     public static final String EXTRA_CODE = "code";
     public static final String EXTRA_QRCODE = "qrcode";
     public static final String EXTRA_BARCODE = "barcode";

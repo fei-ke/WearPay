@@ -2,4 +2,5 @@
     <string name="app_name">Wear Pay</string>
     <string name="wechat_pay">微信支付　</string>
     <string name="ali_pay">支付宝支付</string>
+    <string name="pay_success">支付成功</string>
 </resources>

@@ -10,6 +10,7 @@ import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.wearable.activity.ConfirmationActivity;
 import android.support.wearable.view.DotsPageIndicator;
 import android.support.wearable.view.FragmentGridPagerAdapter;
 import android.support.wearable.view.GridViewPager;
@@ -25,6 +26,16 @@ public class CodeActivity extends Activity implements WatchService.OnCodeChangeL
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             wearPayBinder = (WatchService.WearPayBinder) iBinder;
             wearPayBinder.addChangeListener(CodeActivity.this);
+            wearPayBinder.setOnPaySuccessListener(new WatchService.OnPaySuccessListener() {
+                @Override
+                public void onPaySuccess() {
+                    Intent intent = new Intent(CodeActivity.this, ConfirmationActivity.class);
+                    intent.putExtra(ConfirmationActivity.EXTRA_ANIMATION_TYPE, ConfirmationActivity.SUCCESS_ANIMATION);
+                    intent.putExtra(ConfirmationActivity.EXTRA_MESSAGE, getString(R.string.pay_success));
+                    startActivity(intent);
+                    finish();
+                }
+            });
         }
 
         @Override

@@ -5,6 +5,7 @@ package com.fei_ke.wearpay.common;
  */
 public class Common {
     public static final String PATH_CODE = "/code";
+    public static final String PATH_PAY_SUCCESS = "/pay_success";
     public static final String KEY_CODE = "code";
 
     public static final String PATH_QR_CODE = "/qr_code";

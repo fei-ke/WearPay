@@ -24,6 +24,8 @@
         </activity>
         <activity android:name=".CodeActivity" />
 
+        <activity android:name="android.support.wearable.activity.ConfirmationActivity"/>
+
         <service android:name=".WatchService">
             <intent-filter>
                 <action android:name="com.google.android.gms.wearable.BIND_LISTENER" />

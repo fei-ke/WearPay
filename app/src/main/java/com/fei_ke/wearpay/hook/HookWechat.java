@@ -11,6 +11,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.TextView;
 
+import com.fei_ke.wearpay.commen.Constans;
+
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
@@ -22,6 +24,7 @@ import static com.fei_ke.wearpay.commen.Constans.EXTRA_CODE;
 import static com.fei_ke.wearpay.commen.Constans.THIS_PACKAGE_NAME;
 import static com.fei_ke.wearpay.commen.Constans.WECHAT_CORE_SERVICE_NAME;
 import static com.fei_ke.wearpay.commen.Constans.WECHAT_WALLET_ACTIVITY_NAME;
+import static com.fei_ke.wearpay.commen.Constans.WECHAT_PAY_SUCCESS_ACTIVITY_NAME;
 
 /**
  * Created by fei-ke on 2015/9/26.
@@ -58,6 +61,15 @@ public class HookWechat {
                     protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                         final Activity activity = (Activity) param.thisObject;
                         activity.unregisterReceiver(receiver);
+                    }
+                });
+
+                //when pay success, send a broadcast
+                XposedHelpers.findAndHookMethod(WECHAT_PAY_SUCCESS_ACTIVITY_NAME, classLoader, "onCreate", Bundle.class, new XC_MethodHook() {
+                    @Override
+                    protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                        Intent intent = new Intent(Constans.ACTION_PAY_SUCCESS);
+                        ((Context) param.thisObject).sendBroadcast(intent);
                     }
                 });
             }

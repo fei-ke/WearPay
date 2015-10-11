@@ -35,8 +35,6 @@ public class MainActivity extends Activity {
         findViewById(R.id.test).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Constans.ACTION_FINISHI_ALIPAY_WALLET);
-                sendBroadcast(intent);
             }
         });
         startService(new Intent(this, WatchServices.class));

@@ -27,6 +27,7 @@ import hugo.weaving.DebugLog;
 
 import static com.fei_ke.wearpay.common.Common.PATH_FINISH_WALLET;
 import static com.fei_ke.wearpay.common.Common.PATH_LAUNCH_WALLET;
+import static com.fei_ke.wearpay.common.Common.PATH_PAY_SUCCESS;
 
 /**
  * Created by fei-ke on 2015/9/29.
@@ -37,9 +38,13 @@ public class WatchServices extends WearService {
         @DebugLog
         public void onReceive(Context context, Intent intent) {
             tryConnectGoogleApi();
-
-            String code = intent.getStringExtra(Constans.EXTRA_CODE);
-            sendToWatch(code);
+            String action = intent.getAction();
+            if (Constans.ACTION_SEND_CODE.equals(action)) {
+                String code = intent.getStringExtra(Constans.EXTRA_CODE);
+                sendToWatch(code);
+            } else if (Constans.ACTION_PAY_SUCCESS.equals(action)) {
+                sendPaySuccessMessage();
+            }
         }
     };
 
@@ -48,6 +53,7 @@ public class WatchServices extends WearService {
         super.onCreate();
 
         IntentFilter filter = new IntentFilter(Constans.ACTION_SEND_CODE);
+        filter.addAction(Constans.ACTION_PAY_SUCCESS);
         registerReceiver(receiver, filter);
     }
 
@@ -154,5 +160,9 @@ public class WatchServices extends WearService {
     public void finishAlipayWallet() {
         Intent intent = new Intent(Constans.ACTION_FINISHI_ALIPAY_WALLET);
         sendBroadcast(intent);
+    }
+
+    private void sendPaySuccessMessage(){
+        sendMessageToAllNodes(PATH_PAY_SUCCESS, null);
     }
 }

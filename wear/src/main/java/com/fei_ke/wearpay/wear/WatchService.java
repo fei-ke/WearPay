@@ -22,6 +22,7 @@ import java.util.List;
 import hugo.weaving.DebugLog;
 
 import static com.fei_ke.wearpay.common.Common.PATH_CODE;
+import static com.fei_ke.wearpay.common.Common.PATH_PAY_SUCCESS;
 
 /**
  * Created by fei-ke on 2015/9/30.
@@ -88,6 +89,8 @@ public class WatchService extends WearService {
         String path = messageEvent.getPath();
         if (path.equals(PATH_CODE)) {
             String code = new String(messageEvent.getData());
+        } else if (path.equals(PATH_PAY_SUCCESS)) {
+            wearPayBinder.onPaySuccess();
         }
     }
 
@@ -99,6 +102,7 @@ public class WatchService extends WearService {
         }
 
         private List<OnCodeChangeListener> changeListeners;
+        private OnPaySuccessListener onPaySuccessListener;
 
         public void addChangeListener(OnCodeChangeListener changeListener) {
             if (changeListeners == null) {
@@ -113,7 +117,7 @@ public class WatchService extends WearService {
             }
         }
 
-        public void onCodeChange(Bitmap barCode, Bitmap qrCode) {
+        void onCodeChange(Bitmap barCode, Bitmap qrCode) {
             dispatchOnCodeChange(barCode, qrCode);
         }
 
@@ -125,6 +129,7 @@ public class WatchService extends WearService {
             }
         }
 
+
         public void launchWallet(String witch) {
             host.launchWallet(witch);
         }
@@ -132,10 +137,23 @@ public class WatchService extends WearService {
         public void finishWallet(String witch) {
             host.finishWallet(witch);
         }
+
+        public void setOnPaySuccessListener(OnPaySuccessListener onPaySuccessListener) {
+            this.onPaySuccessListener = onPaySuccessListener;
+        }
+
+        void onPaySuccess() {
+            if (onPaySuccessListener != null) {
+                onPaySuccessListener.onPaySuccess();
+            }
+        }
     }
 
     interface OnCodeChangeListener {
         void onCodeChange(Bitmap barCode, Bitmap qrCode);
     }
 
+    interface OnPaySuccessListener {
+        void onPaySuccess();
+    }
 }

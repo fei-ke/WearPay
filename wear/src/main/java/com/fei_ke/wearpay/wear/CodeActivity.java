@@ -94,7 +94,12 @@ public class CodeActivity extends Activity implements WatchService.OnCodeChangeL
         super.onStop();
         if (wearPayBinder != null) {
             wearPayBinder.finishWallet(witch);
-            unbindService(serviceConnection);
+            try{
+                unbindService(serviceConnection);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
         }
     }
 

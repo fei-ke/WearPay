@@ -951,6 +951,10 @@ android.support.v4.view.ViewCompatHC -> android.support.v4.c.w:
 com.fei_ke.wearpay.MainActivity -> com.fei_ke.wearpay.MainActivity:
     void <init>() -> <init>
     void onCreate(android.os.Bundle) -> onCreate
+    void startAlipay() -> a
+    boolean isRunning() -> b
+    void doStartApplicationWithPackageName(java.lang.String) -> a
+    void access$000(com.fei_ke.wearpay.MainActivity,java.lang.String) -> a
 com.fei_ke.wearpay.MainActivity$1 -> com.fei_ke.wearpay.a:
     com.fei_ke.wearpay.MainActivity this$0 -> a
     void <init>(com.fei_ke.wearpay.MainActivity) -> <init>
@@ -963,6 +967,10 @@ com.fei_ke.wearpay.MainActivity$3 -> com.fei_ke.wearpay.c:
     com.fei_ke.wearpay.MainActivity this$0 -> a
     void <init>(com.fei_ke.wearpay.MainActivity) -> <init>
     void onClick(android.view.View) -> onClick
+com.fei_ke.wearpay.MainActivity$4 -> com.fei_ke.wearpay.d:
+    com.fei_ke.wearpay.MainActivity this$0 -> a
+    void <init>(com.fei_ke.wearpay.MainActivity) -> <init>
+    void run() -> run
 com.fei_ke.wearpay.WatchServices -> com.fei_ke.wearpay.WatchServices:
     android.content.BroadcastReceiver receiver -> a
     void <init>() -> <init>
@@ -974,21 +982,27 @@ com.fei_ke.wearpay.WatchServices -> com.fei_ke.wearpay.WatchServices:
     void sendToWatch(java.lang.String) -> a
     void launchWechatWallet() -> a
     void launchAlipayWallet() -> b
-    void finishWechatWallet() -> c
-    void finishAlipayWallet() -> d
-    void sendPaySuccessMessage() -> g
+    boolean isRunning() -> c
+    void wakeUpAndUnlock(android.content.Context) -> a
+    void finishWechatWallet() -> d
+    void finishAlipayWallet() -> e
+    void sendPaySuccessMessage() -> h
     void access$000(com.fei_ke.wearpay.WatchServices) -> a
     void access$100(com.fei_ke.wearpay.WatchServices,java.lang.String) -> a
     void access$200(com.fei_ke.wearpay.WatchServices) -> b
-com.fei_ke.wearpay.WatchServices$1 -> com.fei_ke.wearpay.d:
+com.fei_ke.wearpay.WatchServices$1 -> com.fei_ke.wearpay.e:
     com.fei_ke.wearpay.WatchServices this$0 -> a
     void <init>(com.fei_ke.wearpay.WatchServices) -> <init>
     void onReceive(android.content.Context,android.content.Intent) -> onReceive
-com.fei_ke.wearpay.WatchServices$2 -> com.fei_ke.wearpay.e:
+com.fei_ke.wearpay.WatchServices$2 -> com.fei_ke.wearpay.f:
     com.fei_ke.wearpay.WatchServices this$0 -> a
     void <init>(com.fei_ke.wearpay.WatchServices) -> <init>
     void onResult(com.google.android.gms.wearable.DataApi$DataItemResult) -> a
     void onResult(com.google.android.gms.common.api.Result) -> a
+com.fei_ke.wearpay.WatchServices$3 -> com.fei_ke.wearpay.g:
+    com.fei_ke.wearpay.WatchServices this$0 -> a
+    void <init>(com.fei_ke.wearpay.WatchServices) -> <init>
+    void run() -> run
 com.fei_ke.wearpay.common.EncodingHandlerUtils -> com.fei_ke.wearpay.a.a:
     android.graphics.Bitmap createQRCode(java.lang.String,int) -> a
     android.graphics.Bitmap createBarcode(java.lang.String,java.lang.Integer,java.lang.Integer) -> a
@@ -1000,7 +1014,7 @@ com.fei_ke.wearpay.common.WearService -> com.fei_ke.wearpay.a.b:
     void onCreate() -> onCreate
     int onStartCommand(android.content.Intent,int,int) -> onStartCommand
     void onDestroy() -> onDestroy
-    void tryConnectGoogleApi() -> e
+    void tryConnectGoogleApi() -> f
     void onConnected(android.os.Bundle) -> a
     void onConnectionSuspended(int) -> a
     void onConnectionFailed(com.google.android.gms.common.ConnectionResult) -> a
@@ -1008,7 +1022,7 @@ com.fei_ke.wearpay.common.WearService -> com.fei_ke.wearpay.a.b:
     void onPeerDisconnected(com.google.android.gms.wearable.Node) -> b
     void onDataChanged(com.google.android.gms.wearable.DataEventBuffer) -> a
     void onMessageReceived(com.google.android.gms.wearable.MessageEvent) -> a
-    java.util.Collection getNodes() -> f
+    java.util.Collection getNodes() -> g
     void sendMessageToAllNodes(java.lang.String,byte[]) -> a
 com.fei_ke.wearpay.common.WearService$1 -> com.fei_ke.wearpay.a.c:
     java.lang.String val$path -> a
@@ -1067,6 +1081,7 @@ com.fei_ke.wearpay.hook.HookWechat -> com.fei_ke.wearpay.hook.h:
     void hook(java.lang.ClassLoader) -> a
     void registerLaunchReceiver(android.content.Context,java.lang.Class) -> a
     void hookCode(android.app.Activity) -> a
+    android.widget.TextView findCodeTextView(android.view.View) -> a
     void launchWechatWallet(android.content.Context,java.lang.Class) -> b
     void access$000(com.fei_ke.wearpay.hook.HookWechat,android.content.Context,java.lang.Class) -> a
     void access$100(com.fei_ke.wearpay.hook.HookWechat,android.app.Activity) -> a

@@ -9,6 +9,8 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.fei_ke.wearpay.commen.Constans;
@@ -23,8 +25,8 @@ import static com.fei_ke.wearpay.commen.Constans.ACTION_SEND_CODE;
 import static com.fei_ke.wearpay.commen.Constans.EXTRA_CODE;
 import static com.fei_ke.wearpay.commen.Constans.THIS_PACKAGE_NAME;
 import static com.fei_ke.wearpay.commen.Constans.WECHAT_CORE_SERVICE_NAME;
-import static com.fei_ke.wearpay.commen.Constans.WECHAT_WALLET_ACTIVITY_NAME;
 import static com.fei_ke.wearpay.commen.Constans.WECHAT_PAY_SUCCESS_ACTIVITY_NAME;
+import static com.fei_ke.wearpay.commen.Constans.WECHAT_WALLET_ACTIVITY_NAME;
 
 /**
  * Created by fei-ke on 2015/9/26.
@@ -96,7 +98,7 @@ public class HookWechat {
     }
 
     private void hookCode(final Activity activity) {
-        TextView textView = (TextView) activity.findViewById(0x7f0e0f82);
+        TextView textView = findCodeTextView(activity.getWindow().getDecorView());
         if (textView != null) {
             textView.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -120,6 +122,28 @@ public class HookWechat {
             });
         }
 
+    }
+
+    private TextView findCodeTextView(View view) {
+        if (view instanceof TextView) {
+            TextView textView = (TextView) view;
+            String text = textView.getText().toString();
+            if (text.matches("(\\d{4}\\s+){4}\\d{2}")) {
+                return textView;
+            }
+        }
+
+        if (view instanceof ViewGroup) {
+            ViewGroup viewGroup = (ViewGroup) view;
+            int childCount = viewGroup.getChildCount();
+            for (int i = 0; i < childCount; i++) {
+                TextView codeTextView = findCodeTextView(viewGroup.getChildAt(i));
+                if (codeTextView != null) {
+                    return codeTextView;
+                }
+            }
+        }
+        return null;
     }
 
     private void launchWechatWallet(Context context, Class walletActivityClass) {
